@@ -32,6 +32,8 @@ class ContactsTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        
+        ref = Firebase(url: "https://contacsmruiz.firebaseio.com/Contacts")
     }
     
     override func viewWillAppear(animated: Bool) {
