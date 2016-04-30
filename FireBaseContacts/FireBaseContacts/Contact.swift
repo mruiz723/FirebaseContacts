@@ -12,11 +12,11 @@ import Firebase
 class Contact {
     
     //MARK: - Properties
-    let id:String?
-    let name:String?
-    let lastName:String?
-    let phone:String?
-    let email:String?
+    var id:String?
+    var name:String?
+    var lastName:String?
+    var phone:String?
+    var email:String?
     
     //MARK: - Init
     init(id:String, name:String, lastName:String, phone:String, email:String){
@@ -35,22 +35,15 @@ class Contact {
         self.init(id:snapshot.key, name:snapshot.value["name"] as! String, lastName:snapshot.value["lastName"]as! String, phone:snapshot.value["phone"]as! String, email:snapshot.value["email"]as! String)
     }
  
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    //MARK: - Utils
+    func toDictionary() -> Dictionary<String,String> {
+        return [
+            "name": name!,
+            "lastName": lastName!,
+            "phone": phone!,
+            "email": email!
+        ]
+    }
     
     
 }

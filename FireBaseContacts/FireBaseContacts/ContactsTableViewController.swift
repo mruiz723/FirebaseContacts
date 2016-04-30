@@ -11,16 +11,11 @@ import Firebase
 
 
 class ContactsTableViewController: UITableViewController {
-
-    //MARK: - IBActions
-    
-    
-    
     
     //MARK: - Properties
     let cellIdentifier = "Contact"
-    var contacts:[Contact]?
-    var contact:Contact?
+    var contacts = [Contact]()
+    var contact = Contact()
     var ref: Firebase!
     var handle: UInt!
     
@@ -45,7 +40,7 @@ class ContactsTableViewController: UITableViewController {
                 self.contacts = [Contact]()
                 for item in snapshot.children{
                     let contact = Contact(snapshot: item as! FDataSnapshot)
-                    self.contacts?.append(contact)
+                    self.contacts.append(contact)
                 }
                 
                 self.tableView.reloadData()
@@ -67,7 +62,7 @@ class ContactsTableViewController: UITableViewController {
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return contacts.count
     }
 
     
@@ -75,13 +70,40 @@ class ContactsTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath)
 
         // Configure the cell...
-        contact = contacts![indexPath.row]
-        cell.textLabel!.text = contact?.name
-        cell.detailTextLabel?.text = contact?.email
+        contact = contacts[indexPath.row]
+        cell.textLabel!.text = contact.name
+        cell.detailTextLabel?.text = contact.email
         
         return cell
     }
     
+    // MARK: - Table view delegate
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        contact = contacts[indexPath.row]
+        performSegueWithIdentifier("Edit", sender: nil)
+    }
+    
+    override func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
+        let deleteAction = UITableViewRowAction(style: UITableViewRowActionStyle.Destructive, title: "Borrar" , handler: { (action:UITableViewRowAction!, indexPath:NSIndexPath!) -> Void in
+            
+            self.contact = self.contacts[indexPath.row]
+            
+            let contactRef = self.ref.childByAppendingPath(self.contact.id)
+            
+            contactRef.removeValueWithCompletionBlock({ (error, ref) -> Void in
+                
+                if error != nil {
+                    self.makeAlertWithMessage("Ha ocurrido un error al borrar")
+                    print(error.localizedDescription)
+                }else{
+                    self.makeAlertWithMessage("El contacto ha sido borrado")
+                }
+                
+            })
+        })
+        
+        return [deleteAction]
+    }
     
     // MARK: - Navigation
 
@@ -101,24 +123,15 @@ class ContactsTableViewController: UITableViewController {
             
         }
         
-        
-        
     }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    // MARK: - Utils
+    func makeAlertWithMessage(message: String) {
+        
+        let alert = UIAlertController(title: "Alerta", message: message, preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addAction(UIAlertAction(title: "Aceptar", style: UIAlertActionStyle.Default, handler:nil))
+        self.presentViewController(alert, animated: true, completion: nil)
+        
+    }
 
 }

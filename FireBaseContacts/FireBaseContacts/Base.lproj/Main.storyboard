@@ -188,10 +188,10 @@
                     </view>
                     <navigationItem key="navigationItem" title="Nuevo Contacto" id="xpO-LG-5B9"/>
                     <connections>
-                        <outlet property="emailLabel" destination="Cd1-Qu-5mN" id="GC4-Mh-rML"/>
-                        <outlet property="lastNameLabel" destination="wpF-tr-YrX" id="jby-g5-H35"/>
-                        <outlet property="nameLabel" destination="4Iw-3n-l0A" id="LqZ-gV-aHy"/>
-                        <outlet property="phoneLabel" destination="UNc-NG-I52" id="Uhi-2g-hhm"/>
+                        <outlet property="emailTextField" destination="Cd1-Qu-5mN" id="RXl-KE-3yc"/>
+                        <outlet property="lastNameTextField" destination="wpF-tr-YrX" id="SOD-sh-K50"/>
+                        <outlet property="nameTextField" destination="4Iw-3n-l0A" id="Bid-VR-Snd"/>
+                        <outlet property="phoneTextField" destination="UNc-NG-I52" id="R2y-dX-Dme"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="deo-Ds-Xjj" userLabel="First Responder" sceneMemberID="firstResponder"/>
